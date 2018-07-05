@@ -1,0 +1,1173 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@atomist/sdm-core</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@atomist/sdm-core</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @atomist/sdm-core</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="software-delivery-machine">Software Delivery Machine</h1>
+				<p>Atomist framework enabling you to control your delivery and development process in code. Think of it as Spring Boot for software delivery.</p>
+				<h2 id="what-is-a-software-delivery-machine-">What is a Software Delivery Machine?</h2>
+				<p>A <strong>software delivery machine</strong>  (SDM) is a development process in a box. It automates all steps in the flow from commit to production (potentially via staging environments), and many other actions, using the consistent model provided by the Atomist <em>API for software</em>.</p>
+				<blockquote>
+					<p>Many teams have a blueprint in their mind for how they&#39;d like to deliver software and ease their day to day work, but find it hard to realize. A Software Delivery Machine makes it possible.</p>
+				</blockquote>
+				<p>The concept is explained in detail in Rod Johnson&#39;s blog <a href="https://the-composition.com/why-you-need-a-software-delivery-machine-85e8399cdfc0">Why you need a Software Delivery Machine</a>. This <a href="https://vimeo.com/260496136">video</a> shows it in action.</p>
+				<blockquote>
+					<p>Atomist is about developing your development experience by using your coding skills. Change the code, restart, and see your new automations and changed behavior across all your projects, within seconds. </p>
+				</blockquote>
+				<h2 id="get-started">Get Started</h2>
+				<p>This repository contains an SDM framework built on lower level Atomist capabilities.</p>
+				<p>SDMs based on this framework process events from the Atomist SaaS event hub. The architecture is as follows, with events coming in from the systems that matter in your development process:</p>
+				<p><img src="https://atomist.com/img/Atomist-Team-Development.jpg"/></p>
+				<p>You&#39;ll need to be a member of an Atomist workspace to run an SDM.
+					Create your own by <a href="https://github.com/atomist/welcome/blob/master/enroll.md">enrolling</a> at <a href="https://atomist.com">atomist.com</a>.
+				Things work best if you install an org webhook, so that Atomist receives events for all your GitHub repos.</p>
+				<p>Once the Atomist bot is in your Slack team, type <code>@atomist create sdm</code> to have Atomist create a personalized SDM instance using this project. You can also clone the <code>sample-sdm</code> project.</p>
+				<p>Once your SDM is running, type <code>@atomist show skills</code> in any channel to see a list of all available Atomist commands.</p>
+				<h2 id="run-locally">Run Locally</h2>
+				<p>SDM projects are Atomist automation clients, written in <a href="https://www.typescriptlang.org">TypeScript</a> or JavaScript. See <a href="https://github.com/atomist/welcome/blob/master/runClient.md">run an automation client</a> for instructions on how to set up your environment and run it under Node.js. </p>
+				<p>See <a href="./docs/Setup.md">set up</a> for additional prerequisites depending on the projects you&#39;re building.</p>
+				<p>See the <a href="https://github.com/atomist/sample-sdm">sample-sdm project</a> project for instructions on how to run an SDM instance, and description of the out of the box functionality.</p>
+				<h2 id="core-concepts">Core Concepts</h2>
+				<p>Atomist is a flexible platform, enabling you to build your own automations or use those provided by Atomist or third parties. Because you&#39;re using a real programming language (not YAML or Bash), and you have access to a real ecosystem (Node), you can create a richer delivery experience than you&#39;ve even imagined.</p>
+				<p>This project demonstrates Atomist as the <em>API for software</em>, exposing:</p>
+				<ul>
+					<li><em>What we know</em>: The Atomist cortex, accessible through GraphQL queries and subscription joins</li>
+					<li><em>What just happened</em>: An event, triggered by a GraphQL subscription, which is contextualized with the existing knowledge</li>
+					<li><em>What you&#39;re working on</em>: A library that enables you to comprehend and manipulate the source code you&#39;re working on.</li>
+				</ul>
+				<p>This project builds on other Atomist core functionality available from global automations, such as: Atomist <strong>lifecycle</strong>, showing commit, pull request and other activity through actionable messages.</p>
+				<p>Atomist is not tied to GitHub, but this repository focuses on using Atomist with GitHub.com or
+				GitHub Enterprise.</p>
+				<h3 id="events">Events</h3>
+				<p>The heart of Atomist is its event handling. As your code flows from commit
+					through to deployment and beyond, Atomist receives events, correlates the incoming data
+				with its previous knowledge, and invokes your event handlers with rich context. This enables your automations to perform tasks such as:</p>
+				<ul>
+					<li>Scanning code for security or quality issues on every push</li>
+					<li>Driving deployments and promotion between environments</li>
+					<li>Performing custom actions on deployment, such as kicking off integration test suites.</li>
+				</ul>
+				<p>The Atomist correlated event model also enables Atomist to provide you with visibility throughout the commit to deployment flow, in Slack or through the Atomist web dashboard.</p>
+				<h4 id="under-the-hood-how-it-works">Under the Hood: How it Works</h4>
+				<p>Event handlers subscribe to events using <a href="http://graphql.org">GraphQL</a> subscriptions against the Atomist cortex. The following GraphQL subscribes to completed builds, returning related data such as the last commit and any linked Slack channels:</p>
+				<pre><code class="lang-graphql">subscription OnBuildComplete {
+  Build {
+    buildId
+    buildUrl
+    compareUrl
+    name
+    status
+    commit {
+      sha
+      message
+      repo {
+        name
+        owner
+        gitHubId
+        allowRebaseMerge
+        channels {
+          name
+          id
+        }
+      }
+      statuses {
+        context
+        description
+        state
+        targetUrl
+      }
+    }
+  }
+}
+</code></pre>
+				<p>When using TypeScript (our recommended language), an event handler can subscribe to such events with the benefit of strong typing. For example, this Atomist event handler can respond to the above GraphQL subscription:</p>
+				<pre><code class="lang-typescript"><span class="hljs-meta">@EventHandler</span>(<span class="hljs-string">"Set status on build complete"</span>,
+    GraphQL.subscriptionFromFile(<span class="hljs-string">"graphql/subscription/OnBuildComplete.graphql"</span>))
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> SetStatusOnBuildComplete <span class="hljs-keyword">implements</span> HandleEvent&lt;OnBuildComplete.Subscription&gt; {
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> handle(event: EventFired&lt;OnBuildComplete.Subscription&gt;, 
+        ctx: HandlerContext, 
+        params: <span class="hljs-keyword">this</span>): <span class="hljs-built_in">Promise</span>&lt;HandlerResult&gt; {
+</code></pre>
+				<p>This underlying GraphQL/event handler infrastructure is generic and powerful. However, many things are better done at a higher level. This project provides a framework above this infrastructure that makes typical tasks far easier, while not preventing you from breaking out into lower level functionality. </p>
+				<blockquote>
+					<p>This repository
+						includes event handlers that subscribe to the most important events in a typical
+						delivery flow. This enables dynamic and sophisticated delivery processes that are consistent across
+					multiple projects.</p>
+				</blockquote>
+				<h3 id="goals-and-listeners">Goals and Listeners</h3>
+				<p>The most important higher level SDM functionality relates to what happens on a push to a repository. An SDM allows you to process a push in any way you choose, but typically you want it to initiate a delivery flow.</p>
+				<h4 id="goals">Goals</h4>
+				<p>An SDM allows you to set <strong>goals</strong> on push. Goals correspond to the actions that make up a delivery flow, such as build and deployment. Goals are not necessarily sequential--some may be executed in parallel--but certain goals, such as deployment, have preconditions (goals that must have previously completed successfully).</p>
+				<p>Goals are set using <strong>rules</strong>, which are typically expressed in a simple internal DSL. For example, the following rules use <code>PushTest</code> predicates such as <code>ToDefaultBranch</code> and <code>IsMaven</code> to determine what goals to set for incoming pushes:</p>
+				<pre><code class="lang-typescript">whenPushSatisfies(ToDefaultBranch, IsMaven, HasSpringBootApplicationClass, HasCloudFoundryManifest,
+        ToPublicRepo, not(NamedSeedRepo), not(FromAtomist), IsDeployEnabled)
+    .setGoals(HttpServiceGoals),
+whenPushSatisfies(IsMaven, HasSpringBootApplicationClass, not(FromAtomist))
+    .itMeans(<span class="hljs-string">"Spring Boot service local deploy"</span>)
+    .setGoals(LocalDeploymentGoals),
+</code></pre>
+				<p>Push test predicates are easy to write using the Atomist API. For example:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> IsMaven: PredicatePushTest = predicatePushTest(
+    <span class="hljs-string">"Is Maven"</span>,
+    <span class="hljs-keyword">async</span> p =&gt; !!(<span class="hljs-keyword">await</span> p.getFile(<span class="hljs-string">"pom.xml"</span>)));
+</code></pre>
+				<p>Goals are defined as follows:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HttpServiceGoals = <span class="hljs-keyword">new</span> Goals(
+    <span class="hljs-string">"HTTP Service"</span>,
+    FingerprintGoal,
+    AutofixGoal,
+    ReviewGoal,
+    PushReactionGoal,
+    BuildGoal,
+    ArtifactGoal,
+    StagingDeploymentGoal,
+    StagingEndpointGoal,
+    StagingVerifiedGoal,
+    ProductionDeploymentGoal,
+    ProductionEndpointGoal);
+</code></pre>
+				<p>It is possible to define new goals with accompanying implementations, making this approach highly extensible.</p>
+				<h4 id="listeners">Listeners</h4>
+				<p>We&#39;ll return to push tests shortly, but first let&#39;s consider the SDM listener concept.</p>
+				<p>While the goals set drive the delivery process, domain specific <strong>listeners</strong> help in goal implementation and allow observation of the process as it unfolds. Listener <strong>registrations</strong> allow selective listener firing, on only particular pushes. A registration includes a name (for diagnostics) and a <code>PushTest</code>, narrowing on particular pushes.</p>
+				<p>For example, the following listener registration causes an automatic fix to be made on every push to a Node project, adding a license file if none is found:</p>
+				<pre><code class="lang-typescript"> sdm.addAutofixes({
+        name: <span class="hljs-string">"fix me"</span>,
+        pushTest: IsNode,
+        action: <span class="hljs-keyword">async</span> cri =&gt; {
+            <span class="hljs-keyword">const</span> license = <span class="hljs-keyword">await</span> axios.get(<span class="hljs-string">"https://www.apache.org/licenses/LICENSE-2.0.txt"</span>);
+            <span class="hljs-keyword">return</span> cri.project.addFile(<span class="hljs-string">"LICENSE"</span>, license.data);
+        },
+    })
+
+</code></pre>
+				<p>The following listener observes a build, notifying any linked Slack channels of its status:</p>
+				<pre><code class="lang-typescript">sdm.addBuildListeners(<span class="hljs-keyword">async</span> br =&gt;
+        br.addressChannels(<span class="hljs-string">`Build of <span class="hljs-subst">${br.id.repo}</span> has status <span class="hljs-subst">${br.build.status}</span>`</span>));
+</code></pre>
+				<blockquote>
+					<p>SDM listeners are a layer above GraphQL subscriptions and event handlers that simplify common scenarios, and enable most functionality to be naturally expressed in terms of the problem domain. Listener implementations are also easily testable.</p>
+				</blockquote>
+				<h5 id="common-listener-context">Common Listener Context</h5>
+				<p>As with all good frameworks, we&#39;ve tried to make the API consistent. All listener invocations include at least the following generally useful information:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> SdmContext {
+
+    <span class="hljs-comment">/**
+     * Context of the Atomist EventHandler invocation. Use to run GraphQL
+     * queries, use the messageClient directly and find
+     * the team and correlation id
+     */</span>
+    context: HandlerContext;
+
+    <span class="hljs-comment">/**
+     * If available, provides a way to address the channel(s) related to this event.
+     * This is usually, but not always, the channels linked to a
+     * In some cases, such as repo creation or a push to a repo where there is no linked channel,
+     * addressChannels will go to dev/null without error.
+     */</span>
+    addressChannels: AddressChannels;
+
+    <span class="hljs-comment">/**
+     * Credentials for use with source control hosts such as GitHub
+     */</span>
+    credentials: ProjectOperationCredentials;
+
+}
+</code></pre>
+				<p>Most events concern a specific repository, and hence most listener invocations extend <code>RepoContext</code>:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> RepoContext <span class="hljs-keyword">extends</span> SdmContext {
+
+    <span class="hljs-comment">/**
+     * The repo this relates to
+     */</span>
+    id: RemoteRepoRef;
+
+}
+</code></pre>
+				<p>Many repo-specific listeners are given access to the repository source, via the <code>Project</code> abstraction:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> ProjectListenerInvocation <span class="hljs-keyword">extends</span> RepoListenerInvocation {
+
+    <span class="hljs-comment">/**
+     * The project to which this event relates. It will have been cloned
+     * prior to this invocation. Modifications made during listener invocation will
+     * not be committed back to the project (although they are acceptable if necessary, for
+     * example to run particular commands against the project).
+     * As well as working with
+     * project files using the Project superinterface, we can use git-related
+     * functionality fro the GitProject subinterface: For example to check
+     * for previous shas.
+     * We can also easily run shell commands against the project using its baseDir.
+     */</span>
+    project: GitProject;
+
+}
+
+</code></pre>
+				<p>The <code>Project</code> interface is defined in <a href="https://github.com/atomist/automation-client-ts">@atomist/automation-client</a>. It provides an abstraction to the present repository, with Atomist taking care of Git cloning and (if necessary) writing back any changes via a push. It is abstracted from the file system, making it easy to unit listeners accessing repository contents, using the <code>InMemoryProject</code> and <code>InMemoryFile</code> classes. </p>
+				<blockquote>
+					<p>The Project API and sophisticated parsing functionality available on top of it is a core Atomist capability. Many events can only be understood in the context of the impacted code, and many actions are achieved by modifying code.</p>
+				</blockquote>
+				<p>Push listeners also have access to the details of the relevant push:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> PushListenerInvocation <span class="hljs-keyword">extends</span> ProjectListenerInvocation {
+
+     <span class="hljs-comment">/**
+     * Information about the push, including repo and commit
+     */</span>
+    readonly push: OnPushToAnyBranch.Push;
+
+}
+</code></pre>
+				<h5 id="available-listener-interfaces">Available Listener Interfaces</h5>
+				<p>The following listener interfaces are available:</p>
+				<ul>
+					<li><code>ArtifactListener</code>: Invoked when a new binary has been created</li>
+					<li><code>BuildListener</code>: Invoked when a build is complete. </li>
+					<li><code>ChannelLinkListenerInvocation</code>: Invoked when a channel is linked to a repo</li>
+					<li><code>ClosedIssueListener</code>: Invoked when an issue is closed</li>
+					<li><code>PushReactionListener</code>: Invoked in response to a code change</li>
+					<li><code>DeploymentListener</code>: Invoked when a deployment has succeeded</li>
+					<li><code>FingerprintDifferenceListener</code>: Invoked when a fingerprint has changed</li>
+					<li><code>GoalsSetListener</code>: Invoked when goals are set on a push</li>
+					<li><code>Listener</code>: Superinterface for all listeners</li>
+					<li><code>NewIssueListener</code>: Invoked when an issue has been created</li>
+					<li><code>ProjectListener</code>: Superinterface for all listeners that relate to a project and make the cloned project available</li>
+					<li><code>PullRequestListener</code>: Invoked when a pull request is raised</li>
+					<li><code>PushListener</code>: Superinterface for listeners to push events</li>
+					<li><code>RepoCreationListener</code>: Invoked when a repository has been created</li>
+					<li><code>SupersededListener</code>: Invoked when a commit has been superseded by a subsequent commit</li>
+					<li><code>TagListener</code>: Invoked when a repo is created</li>
+					<li><code>UpdatedIssueListener</code>: Invoked when an issue has been updated</li>
+					<li><code>UserJoiningChannelListener</code>: Invoked when a user joins a channel</li>
+					<li><code>VerifiedDeploymentListener</code>: Invoked when an endpoint has been verified</li>
+				</ul>
+				<h4 id="push-mappings">Push Mappings</h4>
+				<p>Let&#39;s now return to push mappings and goal setting. The <code>PushMapping</code> interface is used to decide how to handle pushes. Normally it is used via the DSL we&#39;ve seen.</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> PushMapping&lt;V&gt; {
+
+    <span class="hljs-comment">/**
+     * Name of the PushMapping. Must be unique
+     */</span>
+    readonly name: <span class="hljs-built_in">string</span>;
+
+    <span class="hljs-comment">/**
+     * Compute a value for the given push. Return undefined
+     * if we don't find a mapped value.
+     * Return DoNotSetAnyGoals (null) to shortcut evaluation of the present set of rules,
+     * terminating evaluation and guarantee the return of undefined if we've reached this point.
+     * Only do so if you are sure
+     * that this evaluation must be short circuited if it has reached this point.
+     * If a previous rule has matched, it will still be used.
+     * The value may be static
+     * or computed on demand, depending on the implementation.
+     * @param {PushListenerInvocation} p
+     * @return {Promise&lt;V | undefined | NeverMatch&gt;}
+     */</span>
+    valueForPush(p: PushListenerInvocation): <span class="hljs-built_in">Promise</span>&lt;V | <span class="hljs-literal">undefined</span> | NeverMatch&gt;;
+}
+</code></pre>
+				<p><code>PushMapping</code> is a central interface used in many places.</p>
+				<p>A <code>GoalSetter</code> is a <code>PushMapping</code> that returns <code>Goals</code>.</p>
+				<p>A <code>PushTest</code> is simply a <code>PushMapping</code> that returns <code>boolean</code>.</p>
+				<h2 id="code-examples">Code Examples</h2>
+				<p>Let&#39;s look at some examples of listeners.</p>
+				<h3 id="issue-creation">Issue Creation</h3>
+				<p>When a new issue is created, you may want to notify people or perform an action.</p>
+				<h4 id="listener-interfaces">Listener interfaces</h4>
+				<ol>
+					<li><code>NewIssueListener</code>: <a href="src/api/listener/NewIssueListener.ts">NewIssueListener</a></li>
+				</ol>
+				<h4 id="examples">Examples</h4>
+				<p>The following example notifies any user who raises an issue with insufficient detail in the body, via a
+					direct message in Slack, and provides them with a helpful
+					link to the issue. Note that we make use of the
+				person available via the <code>openedBy</code> field:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">requestDescription</span>(<span class="hljs-params">inv: NewIssueInvocation</span>) </span>{
+    <span class="hljs-keyword">if</span> (!inv.issue.body || inv.issue.body.length &lt; <span class="hljs-number">10</span>) {
+        <span class="hljs-keyword">await</span> inv.context.messageClient.addressUsers(
+            <span class="hljs-string">`Please add a description for new issue <span class="hljs-subst">${inv.issue.number}</span>: _<span class="hljs-subst">${inv.issue.title}</span>_: <span class="hljs-subst">${inv.id.url}</span>/issues/<span class="hljs-subst">${inv.issue.number}</span>`</span>,
+            inv.issue.openedBy.person.chatId.screenName);
+    }
+}
+</code></pre>
+				<p>This is registed with a <code>SoftwareDeliveryMachine</code> instance as follows:</p>
+				<pre><code class="lang-typescript">sdm.addNewIssueListeners(requestDescription)
+</code></pre>
+				<p>Using the <code>credentials</code> on the <code>NewIssueInvocation</code>, you can easily use the GitHub API to modify the issue, for example correcting spelling errors.</p>
+				<h3 id="repo-creation">Repo Creation</h3>
+				<p>We frequently want to respond to the creation of a new repository: For example, we may want to notify people, provision infrastructure, or tag it with GitHub topics based on its contents.</p>
+				<h4 id="listener-interfaces">Listener interfaces</h4>
+				<p>There are two scenarios to consider:</p>
+				<ol>
+					<li>The creation of a new repository. <code>RepoCreationListener</code>: <a href="src/api/listener/RepoCreationListener.ts">RepoCreationListener</a></li>
+					<li>The first push to a repository, which uses the more generic <a href="src/api/listener/PushListener.ts">ProjectListener</a></li>
+				</ol>
+				<p>The second scenario is usually more important, as it is possible to create a repository without any source code or a master branch, which isn&#39;t enough to work with for common actions.</p>
+				<h4 id="examples">Examples</h4>
+				<p>The following example publishes a message to the <code>#general</code> channel in Slack when a new repo has been created:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> PublishNewRepo: SdmListener = <span class="hljs-function">(<span class="hljs-params">i: ListenerInvocation</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> i.context.messageClient.addressChannels(
+        <span class="hljs-string">`A new repo was created: \`<span class="hljs-subst">${i.id.owner}</span>:<span class="hljs-subst">${i.id.repo}</span>\``</span>, <span class="hljs-string">"general"</span>);
+};
+
+</code></pre>
+				<p>Tagging a repo with topics based on its content is a useful action. <code>tagRepo</code> is a convenient function to construct a <code>ProjectListener</code> for this. It tags as an argument a <code>Tagger</code>, which looks at the project content and returns a <code>Tags</code> object. The following example from <code>atomist.config.ts</code> tags Spring Boot repos, using a <code>Tagger</code> from the <code>spring-automation</code> project, in addition to suggesting the addition of a Cloud Foundry manifest, and publishing the repo using the listener previously shown:</p>
+				<pre><code class="lang-typescript">sdm.addNewRepoWithCodeActions(
+      tagRepo(springBootTagger),
+      suggestAddingCloudFoundryManifest,
+      PublishNewRepo)
+</code></pre>
+				<h5 id="reviewerregistration">ReviewerRegistration</h5>
+				<p><code>ProjectReviewer</code> is a type defined in <code>automation-client-ts</code>. It allows a structured review to be returned. The review comments can localize the file path, line and column if such information is available, and also optionally include a link to a &quot;fix&quot; command to autofix the problem.</p>
+				<p>The following is a simple project reviewer spots projects without a README, using the <code>Project</code> API:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> hasNoReadMe: ReviewerRegistration = {
+    name: <span class="hljs-string">"hasNoReadme"</span>,
+    action: <span class="hljs-keyword">async</span> cri =&gt; ({
+        repoId: cri.project.id,
+        comments: !!(<span class="hljs-keyword">await</span> cri.project.getFile(<span class="hljs-string">"README.me"</span>)) ?
+            [] :
+            [<span class="hljs-keyword">new</span> DefaultReviewComment(<span class="hljs-string">"info"</span>, <span class="hljs-string">"readme"</span>,
+                <span class="hljs-string">"Project has no README"</span>,
+                {
+                    path: <span class="hljs-string">"README.md"</span>,
+                    lineFrom1: <span class="hljs-number">1</span>,
+                    offset: <span class="hljs-number">-1</span>,
+                })],
+    }),
+};
+</code></pre>
+				<p>A slightly more complex example uses the <code>saveFromFiles</code> utility method to look for and object to YAML files in Maven projects:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> rodHatesYaml: ReviewerRegistration = {
+    name: <span class="hljs-string">"rodHatesYaml"</span>,
+    pushTest: hasFile(<span class="hljs-string">"pom.xml"</span>),
+    action: <span class="hljs-keyword">async</span> cri =&gt; ({
+        repoId: cri.project.id,
+        comments:
+            <span class="hljs-keyword">await</span> saveFromFiles(cri.project, <span class="hljs-string">"**/*.yml"</span>, <span class="hljs-function"><span class="hljs-params">f</span> =&gt;</span>
+                <span class="hljs-keyword">new</span> DefaultReviewComment(<span class="hljs-string">"info"</span>, <span class="hljs-string">"yml-reviewer"</span>,
+                    <span class="hljs-string">`Found YML in \`<span class="hljs-subst">${f.path}</span>\`: Rod regards the format as an insult to computer science`</span>,
+                    {
+                        path: f.path,
+                        lineFrom1: <span class="hljs-number">1</span>,
+                        offset: <span class="hljs-number">-1</span>,
+                    })),
+    }),
+};
+
+</code></pre>
+				<p>These reviewers can be added in an SDM definition as follows:</p>
+				<pre><code class="lang-typescript">sdm.addProjectReviewers(hasNoReadme, rodHatesYaml);
+</code></pre>
+				<h5 id="autofixregistration">AutofixRegistration</h5>
+				<p>An <code>AutofixRegistration</code> can automatically execute code fixes. An example, which adds a license to file if one isn&#39;t found:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> AddLicenseFile: AutofixRegistration = editorAutofixRegistration({
+    name: <span class="hljs-string">"License Fix"</span>,
+    pushTest: not(hasFile(LicenseFilename)),
+    editor: <span class="hljs-keyword">async</span> p =&gt; {
+        <span class="hljs-keyword">const</span> license = <span class="hljs-keyword">await</span> axios.get(<span class="hljs-string">"https://www.apache.org/licenses/LICENSE-2.0.txt"</span>);
+        <span class="hljs-keyword">return</span> p.addFile(<span class="hljs-string">"LICENSE"</span>, license.data);
+    },
+});
+</code></pre>
+				<p>Note the use of the <code>addFile</code> method on <code>Project</code>. Atomist takes care of committing the change to the
+				branch of the push.</p>
+				<p>Registration with an SDM is simple:</p>
+				<pre><code class="lang-typescript">sdm.addAutofixes(
+    AddAtomistJavaHeader,
+    AddAtomistTypeScriptHeader,
+    AddLicenseFile,
+);
+</code></pre>
+				<h5 id="codeactionregistration-interface">CodeActionRegistration interface</h5>
+				<p>This registration allows you to react to the code, with information about the changes in the given push:</p>
+				<p>For example, the following function lists changed files to any linked Slack channels for the repo:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> listChangedFiles: PushReactionRegistration = {
+    action(i: PushImpactListenerInvocation) {
+        <span class="hljs-keyword">return</span> i.addressChannels(<span class="hljs-string">`Files changed:\n<span class="hljs-subst">${i.filesChanged.map(n =&gt; "- `" + n + "`").join("\n")}</span>`</span>);
+    },
+    name: <span class="hljs-string">"List files changed"</span>,
+};
+</code></pre>
+				<p>If you don&#39;t have a custom name or PushTest, you can use the following shorthand:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> listChangedFiles = <span class="hljs-function"><span class="hljs-params">i</span> =&gt;</span> i.addressChannels(<span class="hljs-string">`Files changed:\n<span class="hljs-subst">${i.filesChanged.map(n =&gt; "- `" + n + "`").join("\n")}</span>`</span>);
+
+</code></pre>
+				<p>Add in an SDM definition as follows:</p>
+				<pre><code class="lang-typescript">sdm.addPushReactions(listChangedFiles)
+</code></pre>
+				<blockquote>
+					<p>If your reaction is essentially a review--for example, it&#39;s associated with a known problem in a particular file location--use a <code>ReviewerRegistration</code> rather than a <code>PushReactionRegistration</code>.</p>
+					<p>Important note: You must have set a <code>PushReactionGoal</code> for push reactions to be invoked</p>
+				</blockquote>
+				<h4 id="fingerprints">Fingerprints</h4>
+				<p>A special kind of push listener relates to <strong>fingerprints</strong>.</p>
+				<p>Fingerprints are data computed against a push. Think of them as snapshots. Typically they reflect the state of the repository&#39;s source code after the push; they can also take into account other characteristics of the commit. Fingerprinting is valuable because:</p>
+				<ol>
+					<li><em>It enables us to assess the impact of a particular commit, through providing a semantic diff</em>. For example, did the commit change dependencies? Did it change some particularly sensitive files that necessitate closer than usual review?</li>
+					<li><em>It enables us to understand the evolution of a code base over time.</em> Atomist persists fingerprints, so we can trace over time anything we fingerprint, and report against it. For example, what is happening to code quality metrics over time?</li>
+				</ol>
+				<p>Atomist ships some out of the box fingerprints, such as Maven and <code>npm</code> dependency fingerprints. But it&#39;s easy to write your own. Fingerprint registrations are like other listener registrations, specifying a name and <code>PushTest</code>. The following example is the complete code for fingerprinting dependencies specified in a <code>package-lock.json</code> file:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PackageLockFingerprinter <span class="hljs-keyword">implements</span> FingerprinterRegistration {
+
+    <span class="hljs-keyword">public</span> readonly name = <span class="hljs-string">"PackageLockFingerprinter"</span>;
+
+    <span class="hljs-keyword">public</span> readonly pushTest: PushTest = IsNode;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> action(cri: PushImpactListenerInvocation): <span class="hljs-built_in">Promise</span>&lt;FingerprinterResult&gt; {
+        <span class="hljs-keyword">const</span> lockFile = <span class="hljs-keyword">await</span> cri.project.getFile(<span class="hljs-string">"package-lock.json"</span>);
+        <span class="hljs-keyword">if</span> (!lockFile) {
+            <span class="hljs-keyword">return</span> [];
+        }
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">const</span> content = <span class="hljs-keyword">await</span> lockFile.getContent();
+            <span class="hljs-keyword">const</span> json = <span class="hljs-built_in">JSON</span>.parse(content);
+            <span class="hljs-keyword">const</span> deps = json.dependencies;
+            <span class="hljs-keyword">const</span> dstr = <span class="hljs-built_in">JSON</span>.stringify(deps);
+            <span class="hljs-keyword">return</span> {
+                name: <span class="hljs-string">"dependencies"</span>,
+                abbreviation: <span class="hljs-string">"deps"</span>,
+                version: <span class="hljs-string">"0.1"</span>,
+                sha: computeShaOf(dstr),
+                data: json,
+            };
+        } <span class="hljs-keyword">catch</span> (err) {
+            logger.warn(<span class="hljs-string">"Unable to compute package-lock.json fingerprint: %s"</span>, err.message);
+            <span class="hljs-keyword">return</span> [];
+        }
+    }
+}
+</code></pre>
+				<p>Fingerprinters can be added to an SDM as follows:</p>
+				<pre><code class="lang-typescript">sdm.addFingerprinterRegistrations(<span class="hljs-keyword">new</span> PackageLockFingerprinter());
+</code></pre>
+				<p>Fingerprinting will only occur if a <code>FingerprintGoal</code> is selected when goals are set.</p>
+				<h2 id="generators">Generators</h2>
+				<p>Another important concern is project creation. Consistent project creation is important to governance and provides a way of sharing knowledge across a team.</p>
+				<p>Atomist&#39;s <a href="https://the-composition.com/no-more-copy-paste-bf6c7f96e445">unique take on project generation</a> starts from a <strong>seed project</strong>--a kind of golden master, that is version controlled using your regular repository hosting solution. A seed project doesn&#39;t need to include template content: It&#39;s a regular project in whatever stack, and Atomist transforms it to be a unique, custom project based on the parameters supplied at the time of project creation. This allows freedom to evolve the seed project with regular development tools.</p>
+				<p>Generators can be registered with an SDM as follows:</p>
+				<pre><code class="lang-typescript">sdm.addGenerators(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> springBootGenerator({
+    ...CommonJavaGeneratorConfig,
+    seedRepo: <span class="hljs-string">"spring-rest-seed"</span>,
+    intent: <span class="hljs-string">"create spring"</span>,
+}))
+</code></pre>
+				<p>The <code>springBootGenerator</code> function used here is provided in <code>sample-sdm</code>, but it&#39;s easy enough to write your own transformation using the <code>Project</code> API. Here&#39;s most of the code in our real Node generator:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">nodeGenerator</span>(<span class="hljs-params">config: GeneratorConfig,
+                              details: Partial&lt;GeneratorCommandDetails&lt;NodeProjectCreationParameters&gt;&gt; = {}</span>): <span class="hljs-title">HandleCommand</span> </span>{
+    <span class="hljs-keyword">return</span> generatorHandler&lt;NodeProjectCreationParameters&gt;(
+        transformSeed,
+        <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">new</span> NodeProjectCreationParameters(config),
+        <span class="hljs-string">`nodeGenerator-<span class="hljs-subst">${config.seedRepo}</span>`</span>,
+        {
+            tags: [<span class="hljs-string">"node"</span>, <span class="hljs-string">"typescript"</span>, <span class="hljs-string">"generator"</span>],
+            ...details,
+            intent: config.intent,
+        });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">transformSeed</span>(<span class="hljs-params">params: NodeProjectCreationParameters, ctx: HandlerContext</span>) </span>{
+    <span class="hljs-keyword">return</span> chainEditors(
+        updatePackageJsonIdentification(params.appName, params.target.description,
+            params.version,
+            params.screenName,
+            params.target),
+        updateReadmeTitle(params.appName, params.target.description),
+    );
+}
+</code></pre>
+				<p>You can invoke such a generator from Slack, like this:</p>
+				<p><img src="https://github.com/atomist/github-sdm/blob/master/docs/create_sample1.png?raw=true"/></p>
+				<p>Note how the repo was automatically tagged with GitHub topics after creation. This was the work of a listener, specified as follows:</p>
+				<pre><code class="lang-typescript">sdm.addNewRepoWithCodeActions(
+    tagRepo(springBootTagger),
+);
+</code></pre>
+				<p>With Atomist ChatOps supports, you can follow along in a linked channel like this:</p>
+				<p><img src="https://github.com/atomist/github-sdm/blob/master/docs/sample1_channel.png?raw=true"/></p>
+				<p>Note the suggestion to add a Cloud Foundry manifest. This is the work of another listener, which reacts to finding new code in a repo. Listeners and commands such as generators work hand in hand for Atomist.</p>
+				<h2 id="editors">Editors</h2>
+				<p>Another core concept is a project <strong>editor</strong>. An editor is a command that transforms project content. Atomist infrastructure can help persist such transformations through branch commits or pull requests, with clean diffs.</p>
+				<h3 id="a-simple-editor">A Simple Editor</h3>
+				<p>As you&#39;d expect, editors also use th <code>Project</code> API.</p>
+				<p>Here&#39;s an example of a simple editor that takes as a parameter the path of a file to remove from a repository. </p>
+				<pre><code class="lang-typescript"><span class="hljs-meta">@Parameters</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> RemoveFileParams {
+
+    <span class="hljs-meta">@Parameter</span>()
+    <span class="hljs-keyword">public</span> path: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> removeFileEditor: HandleCommand = editorCommand&lt;RemoveFileParams&gt;(
+    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> removeFile,
+    <span class="hljs-string">"remove file"</span>,
+    RemoveFileParams,
+    {
+        editMode: <span class="hljs-function"><span class="hljs-params">params</span> =&gt;</span> commitToMaster(<span class="hljs-string">`You asked me to remove file <span class="hljs-subst">${params.path}</span>!`</span>),
+    });
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeFile</span>(<span class="hljs-params">p: Project, ctx: HandlerContext, params: RemoveFileParams</span>) </span>{
+    <span class="hljs-keyword">return</span> p.deleteFile(params.path);
+}
+</code></pre>
+				<p>Editors can be registered with an SDM as follows:</p>
+				<pre><code class="lang-typescript">sdm.addEditors(
+    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> removeFileEditor,
+);
+</code></pre>
+				<h3 id="dry-run-editors">Dry Run Editors</h3>
+				<p>More elaborate editors use helper APIs on top of the <code>Project</code> API such as Atomist&#39;s <a href="https://github.com/atomist/microgrammar">microgrammar</a> API and <a href="https://github.com/atomist/antlr-ts">ANTLR</a> integration.</p>
+				<p>There&#39;s also an important capability called &quot;dry run editing&quot;: Performing an edit on a branch, and then either raising either a PR or an issue, depending on build success or failure. This allows us to safely apply edits across many repositories. There&#39;s a simple wrapper function to enable this:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> tryToUpgradeSpringBootVersion: HandleCommand = dryRunEditor&lt;UpgradeSpringBootParameters&gt;(
+    <span class="hljs-function"><span class="hljs-params">params</span> =&gt;</span> setSpringBootVersionEditor(params.desiredBootVersion),
+    UpgradeSpringBootParameters,
+    <span class="hljs-string">"boot-upgrade"</span>, {
+        description: <span class="hljs-string">`Upgrade Spring Boot version`</span>,
+        intent: <span class="hljs-string">"try to upgrade Spring Boot"</span>,
+    },
+);
+</code></pre>
+				<p>This editor will upgrade the Spring Boot version in one or more projects, then wait to see if the builds succeed. Output will look like this (in the case of success):</p>
+				<p><img src="https://github.com/atomist/github-sdm/blob/master/docs/dry_run_upgrade.png?raw=true"/></p>
+				<blockquote>
+					<p>Dry run editing is another example of how commands and events can work hand in hand with Atomist to provide a uniquely powerful solution.</p>
+				</blockquote>
+				<h2 id="arbitrary-commands">Arbitrary Commands</h2>
+				<p>Both generators and editors are special cases of Atomist <strong>command handlers</strong>, which can be invoked via Slack or HTTP. You can write commands to ensure that anything that needs to be repeated gets done the right way each time, and that the solution isn&#39;t hidden on someone&#39;s machine.</p>
+				<h2 id="pulling-it-all-together-the-softwaredeliverymachine-class">Pulling it All Together: The <code>SoftwareDeliveryMachine</code> class</h2>
+				<p>Your ideal delivery blueprint spans delivery flow, generators, editors and other commands. All we need is something to pull it together.</p>
+				<p>Your event listeners need to be invoked by Atomist handlers. The <code>SoftwareDeliveryMachine</code> takes care of this, ensuring that the correct handlers are emitted for use in <code>atomist.config.ts</code>, without you needing to worry about the event handler registrations on underlying GraphQL.</p>
+				<p>The <code>SoftwareDeliveryMachine</code> class offers a fluent builder approach to adding command handlers, generators and editors.</p>
+				<h3 id="example">Example</h3>
+				<p>For example:</p>
+				<pre><code class="lang-typescript">    <span class="hljs-keyword">const</span> sdm = createSoftwareDeliveryMachine(
+        {
+            builder: K8sBuildOnSuccessStatus,
+            deployers: [
+                K8sStagingDeployOnSuccessStatus,
+                K8sProductionDeployOnSuccessStatus,
+            ],
+            artifactStore,
+        },
+        whenPushSatisfies(PushToDefaultBranch, IsMaven, IsSpringBoot, HasK8Spec, PushToPublicRepo)
+            .setGoals(HttpServiceGoals),
+        whenPushSatisfies(not(PushFromAtomist), IsMaven, IsSpringBoot)
+            .setGoals(LocalDeploymentGoals),
+        whenPushSatisfies(IsMaven, MaterialChangeToJavaRepo)
+            .setGoals(LibraryGoals),
+        whenPushSatisfies(IsNode).setGoals(NpmGoals),
+    );
+    sdm.addNewRepoWithCodeActions(suggestAddingK8sSpec)
+        .addSupportingCommands(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> addK8sSpec)
+        .addSupportingEvents(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> NoticeK8sTestDeployCompletion,
+            <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> NoticeK8sProdDeployCompletion)
+        .addEndpointVerificationListeners(
+            lookFor200OnEndpointRootGet({
+                retries: <span class="hljs-number">15</span>,
+                maxTimeout: <span class="hljs-number">5000</span>,
+                minTimeout: <span class="hljs-number">3000</span>,
+            }),
+        );
+    sdm.addNewIssueListeners(requestDescription)
+        .addEditors(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> tryToUpgradeSpringBootVersion)
+        .addGenerators(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> springBootGenerator({
+            seedOwner: <span class="hljs-string">"spring-team"</span>,
+            seedRepo: <span class="hljs-string">"spring-rest-seed"</span>,
+            groupId: <span class="hljs-string">"myco"</span>,
+        }))
+        .addNewRepoWithCodeActions(
+            tagRepo(springBootTagger),
+            suggestAddingCloudFoundryManifest,
+            PublishNewRepo)
+        .addProjectReviewers(logReview)
+        .addPushReactions(listChangedFiles)
+        .addFingerprinters(mavenFingerprinter)
+        .addDeploymentListeners(PostToDeploymentsChannel)
+        .addEndpointVerificationListeners(LookFor200OnEndpointRootGet)
+        .addVerifiedDeploymentListeners(presentPromotionButton)
+        .addSupersededListeners(
+            <span class="hljs-function"><span class="hljs-params">inv</span> =&gt;</span> {
+                logger.info(<span class="hljs-string">"Will undeploy application %j"</span>, inv.id);
+                <span class="hljs-keyword">return</span> LocalMavenDeployer.deployer.undeploy(inv.id);
+            })
+        .addSupportingCommands(
+            <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> addCloudFoundryManifest,
+            DescribeStagingAndProd,
+            <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> disposeProjectHandler,
+        )
+        .addSupportingEvents(OnDryRunBuildComplete);
+</code></pre>
+				<p>The <code>SoftwareDeliveryMachine</code> instance will create the necessary Atomist event handlers to export.</p>
+				<p>In <code>atomist.config.ts</code> you can bring them in simply as follows:</p>
+				<pre><code class="lang-typescript">commands: assembled.commandHandlers,
+events: assembled.eventHandlers,
+</code></pre>
+				<h2 id="structure-of-this-project">Structure of This Project</h2>
+				<ul>
+					<li><code>src/api</code> is the public user-facing API, including the software delivery machine concept that ties everything together. <em>This may be extracted into its own Node module in future.</em></li>
+					<li><code>src/spi</code> contains interfaces to be extended in integrations with infrastructure,
+					such as artifact storage, logging, build and deployment.</li>
+					<li><code>src/graphql</code> contains GraphQL queries. You can add fields to existing queries and subscriptions, and add your own.</li>
+					<li><code>src/typings</code> is where types generated from GraphQL wind up. Refresh these with <code>npm run gql:gen</code>
+					if you update any GraphQL files in <code>src/graphql</code>.</li>
+					<li><code>src/util</code> contains miscellaneous utilities.</li>
+					<li><code>src/internal</code> contains lower level code such as event handlers necessary to support the user API. This is not intended for user use.</li>
+					<li><code>src/pack</code> contains &quot;extension packs.&quot; These will ultimately be extracted into their own Node modules.</li>
+					<li>The other directories unders <code>src</code> contain useful functionality that may eventually be moved out of this project.</li>
+				</ul>
+				<p>The types from <code>src/api</code> can be imported into downstream projects from the <code>index.ts</code> barrel.</p>
+				<h2 id="plugging-in-third-party-tools">Plugging in Third Party Tools</h2>
+				<p>This repo shows the use of Atomist to perform many steps itself. However, each of the goals used by Atomist here is pluggable.</p>
+				<p>It&#39;s also easy to integrate third party tools like Checkstyle.</p>
+				<h3 id="integrating-ci-tools">Integrating CI tools</h3>
+				<p>One of the tools you are most likely to integrate is CI. For example, you can integrate Jenkins, Travis or Circle CI with Atomist so that these tools are responsible for build. This has potential advantages in terms of scheduling and repeatability of environments.</p>
+				<p>Integrating a CI tool with Atomist is simple. Simply invoke Atomist hooks to send events around build and artifact creation.</p>
+				<p>If integrating CI tools, we recommend the following:</p>
+				<ul>
+					<li>CI tools are great for building and generating artifacts. They are often abused as a PaaS for <code>bash</code>. If you find your CI usage has you programming in <code>bash</code> or YML, consider whether invoking such operations from Atomist event handlers might be a better model.</li>
+					<li>Use Atomist generators to create your CI files, and Atomist editors to keep them in synch, minimizing inconsistency.</li>
+				</ul>
+				<h3 id="integrating-apm-tools">Integrating APM tools</h3>
+				<p>tbd</p>
+				<h3 id="integrating-with-static-analysis-tools">Integrating with Static Analysis Tools</h3>
+				<p>Any tool that runs on code, such as Checkstyle, can easily be integrated.</p>
+				<p>If the tool doesn&#39;t have a Node API (which Checkstyle doesn&#39;t as it&#39;s written in Java), you can invoke it via Node <code>spawn</code>, as Node excels at working with child processes.</p>
+				<h2 id="advanced-push-rules">Advanced Push Rules</h2>
+				<h3 id="computed-values">Computed Values</h3>
+				<p>You can use computed <code>boolean</code> values or the results of synchronous or asynchronous functions returning <code>boolean</code> in the DSL, making it possible to bring in any state you wish. For example:</p>
+				<pre><code class="lang-typescript">whenPushSatisfies(IsMaven, HasSpringBootApplicationClass,
+    deploymentsToday &lt; <span class="hljs-number">25</span>)
+    .itMeans(<span class="hljs-string">"Not tired of deploying Spring apps yet"</span>)
+    .setGoals(LocalDeploymentGoals),
+</code></pre>
+				<h3 id="decision-trees">Decision Trees</h3>
+				<p>You can write decision trees in push rules or other push mappings. These can be nested to arbitrary depth, and can use computed state. For example:</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> pm: PushMapping&lt;Goals&gt; = given&lt;Goals&gt;(IsNode)
+    <span class="hljs-comment">// Compute a value we'll use later</span>
+    .init(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> count = <span class="hljs-number">0</span>)    
+    .itMeans(<span class="hljs-string">"node"</span>)
+    .then(
+        given&lt;Goals&gt;(IsExpress).itMeans(<span class="hljs-string">"express"</span>)
+            .compute(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> count++)
+            <span class="hljs-comment">// Go into tree branch rule set</span>
+            .then(
+                whenPushSatisfies(count &gt; <span class="hljs-number">0</span>).itMeans(<span class="hljs-string">"nope"</span>).setGoals(NoGoals),
+                whenPushSatisfies(TruePushTest).itMeans(<span class="hljs-string">"yes"</span>).setGoals(HttpServiceGoals),
+            ),
+    );
+</code></pre>
+				<h3 id="contribution-style">&quot;Contribution&quot; Style</h3>
+				<p>tbd</p>
+				<h2 id="roadmap">Roadmap</h2>
+				<p>This project is under active development, and still in flux. Some goals:</p>
+				<ul>
+					<li>Splitting out <code>sdm-api</code> project with the contents of the <code>src/api</code> directory</li>
+					<li>Extracting the extension packs under <code>src/pack</code> into their own Node modules.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_commands_displaydeployenablement_.html">"handlers/commands/<wbr>Display<wbr>Deploy<wbr>Enablement"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_commands_setdeployenablement_.html">"handlers/commands/<wbr>Set<wbr>Deploy<wbr>Enablement"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_commands_showbuildlog_.html">"handlers/commands/<wbr>Show<wbr>Build<wbr>Log"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_commands_deleterepository_.html">"handlers/commands/delete<wbr>Repository"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_commands_disposecommand_.html">"handlers/commands/dispose<wbr>Command"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_commands_support_java_javapatterns_.html">"handlers/commands/support/java/java<wbr>Patterns"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_common_defaultreporefresolver_.html">"handlers/common/<wbr>Default<wbr>Repo<wbr>Ref<wbr>Resolver"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_common_githubcredentialsresolver_.html">"handlers/common/<wbr>Git<wbr>Hub<wbr>Credentials<wbr>Resolver"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_build_findartifactonimagelinked_.html">"handlers/events/delivery/build/<wbr>Find<wbr>Artifact<wbr>OnImage<wbr>Linked"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_build_invokelistenersonbuildcomplete_.html">"handlers/events/delivery/build/<wbr>Invoke<wbr>Listeners<wbr>OnBuild<wbr>Complete"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_build_setstatusonbuildcomplete_.html">"handlers/events/delivery/build/<wbr>Set<wbr>Status<wbr>OnBuild<wbr>Complete"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_code_reacttosemanticdiffsonpushimpact_.html">"handlers/events/delivery/code/<wbr>React<wbr>ToSemantic<wbr>Diffs<wbr>OnPush<wbr>Impact"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_deploy_ondeploystatus_.html">"handlers/events/delivery/deploy/<wbr>OnDeploy<wbr>Status"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_deploy_k8s_noticek8sdeploycompletion_.html">"handlers/events/delivery/deploy/k8s/<wbr>Notice<wbr>K8s<wbr>Deploy<wbr>Completion"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_deploy_k8s_noticek8sproddeploycompletion_.html">"handlers/events/delivery/deploy/k8s/<wbr>Notice<wbr>K8s<wbr>Prod<wbr>Deploy<wbr>Completion"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_deploy_k8s_requestk8sdeploys_.html">"handlers/events/delivery/deploy/k8s/<wbr>Request<wbr>K8s<wbr>Deploys"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_fulfillgoalonrequested_.html">"handlers/events/delivery/goals/<wbr>Fulfill<wbr>Goal<wbr>OnRequested"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_requestdownstreamgoalsongoalsuccess_.html">"handlers/events/delivery/goals/<wbr>Request<wbr>Downstream<wbr>Goals<wbr>OnGoal<wbr>Success"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_respondongoalcompletion_.html">"handlers/events/delivery/goals/<wbr>Respond<wbr>OnGoal<wbr>Completion"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_setgoalsonpush_.html">"handlers/events/delivery/goals/<wbr>Set<wbr>Goals<wbr>OnPush"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_skipdownstreamgoalsongoalfailure_.html">"handlers/events/delivery/goals/<wbr>Skip<wbr>Downstream<wbr>Goals<wbr>OnGoal<wbr>Failure"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_k8s_launchgoalk8_.html">"handlers/events/delivery/goals/k8s/launch<wbr>Goal<wbr>K8"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_launchgoal_.html">"handlers/events/delivery/goals/launch<wbr>Goal"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_goals_resetgoals_.html">"handlers/events/delivery/goals/reset<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_delivery_verify_onverifieddeploymentstatus_.html">"handlers/events/delivery/verify/<wbr>OnVerified<wbr>Deployment<wbr>Status"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_issue_closedissuehandler_.html">"handlers/events/issue/<wbr>Closed<wbr>Issue<wbr>Handler"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_issue_newissuehandler_.html">"handlers/events/issue/<wbr>New<wbr>Issue<wbr>Handler"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_issue_updatedissuehandler_.html">"handlers/events/issue/<wbr>Updated<wbr>Issue<wbr>Handler"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_onchannellink_.html">"handlers/events/repo/<wbr>OnChannel<wbr>Link"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_onfirstpushtorepo_.html">"handlers/events/repo/<wbr>OnFirst<wbr>Push<wbr>ToRepo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_onpullrequest_.html">"handlers/events/repo/<wbr>OnPull<wbr>Request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_onrepocreation_.html">"handlers/events/repo/<wbr>OnRepo<wbr>Creation"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_onrepoonboarded_.html">"handlers/events/repo/<wbr>OnRepo<wbr>Onboarded"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_ontag_.html">"handlers/events/repo/<wbr>OnTag"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_handlers_events_repo_onuserjoiningchannel_.html">"handlers/events/repo/<wbr>OnUser<wbr>Joining<wbr>Channel"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_ingesters_sdmdeployenablement_.html">"ingesters/sdm<wbr>Deploy<wbr>Enablement"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_ingesters_sdmversioningester_.html">"ingesters/sdm<wbr>Version<wbr>Ingester"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_artifact_github_githubreleaseartifactstore_.html">"internal/artifact/github/<wbr>Git<wbr>Hub<wbr>Release<wbr>Artifact<wbr>Store"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_artifact_local_ephemerallocalartifactstore_.html">"internal/artifact/local/<wbr>Ephemeral<wbr>Local<wbr>Artifact<wbr>Store"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_executetag_.html">"internal/delivery/build/execute<wbr>Tag"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_k8s_k8automationbuilder_.html">"internal/delivery/build/k8s/<wbr>K8Automation<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_atomistbuildstatusupdater_.html">"internal/delivery/build/local/<wbr>Atomist<wbr>Build<wbr>Status<wbr>Updater"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_localbuilder_.html">"internal/delivery/build/local/<wbr>Local<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_spawnbuilder_.html">"internal/delivery/build/local/<wbr>Spawn<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_lein_leinbuilder_.html">"internal/delivery/build/local/lein/lein<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_npm_npmdetectbuildmapping_.html">"internal/delivery/build/local/npm/<wbr>Npm<wbr>Detect<wbr>Build<wbr>Mapping"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_npm_executepublish_.html">"internal/delivery/build/local/npm/execute<wbr>Publish"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_npm_nodeprojectidentifier_.html">"internal/delivery/build/local/npm/node<wbr>Project<wbr>Identifier"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_npm_nodeprojectversioner_.html">"internal/delivery/build/local/npm/node<wbr>Project<wbr>Versioner"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_npm_npmbuilder_.html">"internal/delivery/build/local/npm/npm<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_npm_npmloginterpreter_.html">"internal/delivery/build/local/npm/npm<wbr>Log<wbr>Interpreter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_projectidentifier_.html">"internal/delivery/build/local/project<wbr>Identifier"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_build_local_projectversioner_.html">"internal/delivery/build/local/project<wbr>Versioner"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_code_fingerprint_executefingerprinting_.html">"internal/delivery/code/fingerprint/execute<wbr>Fingerprinting"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_deploy_local_localdeployeroptions_.html">"internal/delivery/deploy/local/<wbr>Local<wbr>Deployer<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_deploy_local_manageddeployments_.html">"internal/delivery/deploy/local/<wbr>Managed<wbr>Deployments"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_goals_support_github_githubcontext_.html">"internal/delivery/goals/support/github/git<wbr>Hub<wbr>Context"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_goals_support_github_githubstatussetters_.html">"internal/delivery/goals/support/github/git<wbr>Hub<wbr>Status<wbr>Setters"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_goals_support_githubstatussummarysupport_.html">"internal/delivery/goals/support/github<wbr>Status<wbr>Summary<wbr>Support"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_delivery_goals_support_validategoal_.html">"internal/delivery/goals/support/validate<wbr>Goal"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_machine_handlerbasedsoftwaredeliverymachine_.html">"internal/machine/<wbr>Handler<wbr>Based<wbr>Software<wbr>Delivery<wbr>Machine"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_machine_configuresdm_.html">"internal/machine/configure<wbr>Sdm"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_internal_repo_publishtags_.html">"internal/repo/publish<wbr>Tags"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_log_dashboarddisplayprogresslog_.html">"log/<wbr>Dashboard<wbr>Display<wbr>Progress<wbr>Log"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_log_rolarprogresslog_.html">"log/<wbr>Rolar<wbr>Progress<wbr>Log"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_log_rolaranddashboardlogfactory_.html">"log/rolar<wbr>And<wbr>Dashboard<wbr>Log<wbr>Factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_machine_defaultsoftwaredeliverymachineoptions_.html">"machine/default<wbr>Software<wbr>Delivery<wbr>Machine<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_machine_machinefactory_.html">"machine/machine<wbr>Factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_mapping_pushtest_topublicrepo_.html">"mapping/pushtest/to<wbr>Public<wbr>Repo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_clojure_pushtests_.html">"pack/clojure/push<wbr>Tests"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_docker_dockerpushtests_.html">"pack/docker/docker<wbr>Push<wbr>Tests"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_docker_executedockerbuild_.html">"pack/docker/execute<wbr>Docker<wbr>Build"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_dry_run_dryruneditorcommand_.html">"pack/dry-<wbr>run/dry<wbr>Run<wbr>Editor<wbr>Command"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_dry_run_dryruneditorsupport_.html">"pack/dry-<wbr>run/dry<wbr>Run<wbr>Editor<wbr>Support"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_dry_run_support_newbranchwithstatus_.html">"pack/dry-<wbr>run/support/<wbr>New<wbr>Branch<wbr>With<wbr>Status"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_dry_run_support_ondryrunbuildcomplete_.html">"pack/dry-<wbr>run/support/<wbr>OnDry<wbr>Run<wbr>Build<wbr>Complete"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_freeze_inmemorydeploymentstatusmanager_.html">"pack/freeze/<wbr>InMemory<wbr>Deployment<wbr>Status<wbr>Manager"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_freeze_deploymentfreeze_.html">"pack/freeze/deployment<wbr>Freeze"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_graph_goals_graphgoals_.html">"pack/graph-<wbr>goals/graph<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_info_selfdescribe_.html">"pack/info/<wbr>Self<wbr>Describe"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_info_exposeinfo_.html">"pack/info/expose<wbr>Info"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_info_listgenerators_.html">"pack/info/list<wbr>Generators"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_info_support_commandsearch_.html">"pack/info/support/command<wbr>Search"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_node_packagelockfingerprinter_.html">"pack/node/<wbr>Package<wbr>Lock<wbr>Fingerprinter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_node_nodepushtests_.html">"pack/node/node<wbr>Push<wbr>Tests"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_node_npmgoals_.html">"pack/node/npm<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_node_tspushtests_.html">"pack/node/ts<wbr>Push<wbr>Tests"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_node_tslintfix_.html">"pack/node/tslint<wbr>Fix"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundryapi_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Api"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrybluegreendeployer_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Blue<wbr>Green<wbr>Deployer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrybluegreener_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Blue<wbr>Greener"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrymanifest_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Manifest"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrypushdeployer_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Push<wbr>Deployer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrypusher_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Pusher"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrytarget_.html">"pack/pcf/<wbr>Cloud<wbr>Foundry<wbr>Target"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_commandlinecloudfoundrydeployer_.html">"pack/pcf/<wbr>Command<wbr>Line<wbr>Cloud<wbr>Foundry<wbr>Deployer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_environmentcloudfoundrytarget_.html">"pack/pcf/<wbr>Environment<wbr>Cloud<wbr>Foundry<wbr>Target"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_projectarchiver_.html">"pack/pcf/<wbr>Project<wbr>Archiver"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrylogparser_.html">"pack/pcf/cloud<wbr>Foundry<wbr>Log<wbr>Parser"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_pcf_cloudfoundrymanifestpushtest_.html">"pack/pcf/cloud<wbr>Foundry<wbr>Manifest<wbr>Push<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_well_known_goals_addwellknowngoals_.html">"pack/well-<wbr>known-<wbr>goals/add<wbr>Well<wbr>Known<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_well_known_goals_commongoals_.html">"pack/well-<wbr>known-<wbr>goals/common<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_well_known_goals_httpservicegoals_.html">"pack/well-<wbr>known-<wbr>goals/http<wbr>Service<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_pack_well_known_goals_librarygoals_.html">"pack/well-<wbr>known-<wbr>goals/library<wbr>Goals"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_typings_types_.html">"typings/types"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_findlastdeployment_.html">"util/find<wbr>Last<wbr>Deployment"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_fingerprint_javascriptelementrequest_.html">"util/fingerprint/<wbr>Java<wbr>Script<wbr>Element<wbr>Request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_fingerprint_elementrequest_.html">"util/fingerprint/element<wbr>Request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_github_ghub_.html">"util/github/ghub"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_github_githubprovider_.html">"util/github/git<wbr>Hub<wbr>Provider"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_github_githubtagrouter_.html">"util/github/git<wbr>Hub<wbr>Tag<wbr>Router"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_github_tagrepo_.html">"util/github/tag<wbr>Repo"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_lifecyclehelpers_.html">"util/lifecycle<wbr>Helpers"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_misc_base64_.html">"util/misc/base64"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_misc_time_.html">"util/misc/time"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_slack_diffrendering_.html">"util/slack/diff<wbr>Rendering"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_slack_messages_.html">"util/slack/messages"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_verify_lookfor200onendpointrootget_.html">"util/verify/look<wbr>For200<wbr>OnEndpoint<wbr>Root<wbr>Get"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_webhook_imagelink_.html">"util/webhook/<wbr>Image<wbr>Link"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_webhook_sendfingerprinttoatomist_.html">"util/webhook/send<wbr>Fingerprint<wbr>ToAtomist"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
